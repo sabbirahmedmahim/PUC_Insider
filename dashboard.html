@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PUC Insider - Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-brand">PUC Insider</div>
+    <div class="nav-links">
+      <button id="themeToggle" class="nav-btn">☼ Light Mode</button>
+      <button id="logoutBtn" class="nav-btn logout-btn">Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-wrapper">
+    <div class="search-modal">
+      
+      <div class="modal-top">
+        <button class="icon-btn" id="backBtn">←</button>
+        <div class="user-profile">
+          <span class="user-label" id="userDisplay">You</span> 
+        </div>
+      </div>
+
+      <div class="modal-center" id="searchSection">
+        <h1>Find your faculty<span class="cursor">|</span></h1>
+        
+        <div class="search-container">
+          <input type="text" id="searchInput" class="main-input" placeholder="Search faculty name..." autocomplete="off">
+          <ul id="dropdownList" class="dropdown-menu hidden"></ul>
+        </div>
+      </div>
+
+      <div class="modal-center hidden" id="facultySection">
+        <h2 id="facultyNameDisplay" style="margin-bottom: 5px;"></h2>
+        
+        <div class="review-header">
+          <p style="color: var(--text-muted); font-size: 13px;">Anonymous Reviews</p>
+          <select id="sortReviews" class="dropdown-select">
+            <option value="newest">Newest First</option>
+            <option value="highest">Highest Rated</option>
+          </select>
+        </div>
+
+        <div id="reviewsContainer" class="reviews-list"></div>
+
+        <form id="reviewForm" class="review-form">
+          <textarea id="reviewComment" placeholder="Write your anonymous review..." rows="3" required></textarea>
+          
+          <div class="rating-container">
+            <span style="font-size: 13px; color: var(--text-muted);">Rating:</span>
+            <div class="radio-group">
+              <input type="radio" id="rate1" name="rating" value="1" required><label for="rate1">1</label>
+              <input type="radio" id="rate2" name="rating" value="2"><label for="rate2">2</label>
+              <input type="radio" id="rate3" name="rating" value="3"><label for="rate3">3</label>
+              <input type="radio" id="rate4" name="rating" value="4"><label for="rate4">4</label>
+              <input type="radio" id="rate5" name="rating" value="5"><label for="rate5">5</label>
+            </div>
+          </div>
+
+          <div class="checkbox-container">
+            <input type="checkbox" id="confirmRules" required>
+            <label for="confirmRules">I confirm this review is respectful.</label>
+          </div>
+
+          <button type="submit" class="primary-btn">Post Review</button>
+        </form>
+      </div>
+
+      <div class="widget-container">
+        <div class="widget-header">
+          <span style="font-size: 15px; font-weight: bold; color: var(--text-main);">☁️ Campus Weather (Chittagong)</span>
+          <button id="weatherBtn" class="action-btn">Refresh</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+          <div id="weatherTemp" style="font-size: 32px; font-weight: 800;">--°C</div>
+          <div style="display: flex; flex-direction: column;">
+            <span id="weatherDesc" style="font-size: 14px; font-weight: 600;">Loading...</span>
+            <span id="weatherWind" style="font-size: 12px; color: var(--text-muted);">Wind: -- km/h</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>

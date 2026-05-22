@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, query, where } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAInkx3PZugoMUAG1CmMaqXtUJ-BffpTzk",
@@ -27,7 +27,7 @@ const reviewsContainer = document.getElementById('reviewsContainer');
 const reviewForm = document.getElementById('reviewForm');
 const themeToggle = document.getElementById('themeToggle');
 const weatherBtn = document.getElementById('weatherBtn');
-const sortSelect = document.getElementById('sortReviews'); 
+const sortSelect = document.getElementById('sortReviews');
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
@@ -121,7 +121,7 @@ searchInput.addEventListener('input', function() {
         facultySection.classList.remove('hidden');
         dropdownList.classList.add('hidden');
         searchInput.value = '';
-   
+        
         sortSelect.value = "newest"; 
         loadReviews();
       });
@@ -156,19 +156,15 @@ async function loadReviews() {
       return;
     }
 
-    
     let reviewsList = [];
     querySnapshot.forEach((docSnap) => {
       reviewsList.push({ id: docSnap.id, ...docSnap.data() });
     });
 
-   
     const sortValue = sortSelect.value;
     if (sortValue === "highest") {
-      
       reviewsList.sort((a, b) => b.rating - a.rating);
     } else {
-      
       reviewsList.sort((a, b) => {
         let timeA = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate().getTime() : 0;
         let timeB = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate().getTime() : 0;
@@ -178,37 +174,22 @@ async function loadReviews() {
 
     reviewsContainer.innerHTML = "";
     reviewsList.forEach((review) => {
-      const isOwner = review.userEmail === auth.currentUser.email;
-      const deleteBtnHTML = isOwner ? `<button data-id="${review.id}" class="delete-btn">Delete</button>` : '';
-
-      
       let stars = "★".repeat(review.rating);
 
+     
       reviewsContainer.innerHTML += `
         <div class="review-card">
           <div>
             <strong>Rating: ${stars} (${review.rating}/5)</strong>
             <p style="margin-top: 5px;">${review.comment}</p>
           </div>
-          ${deleteBtnHTML}
         </div>
       `;
-    });
-
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        if (confirm("Delete this review?")) {
-          await deleteDoc(doc(db, "reviews", e.target.getAttribute('data-id')));
-          alert("Review deleted.");
-          loadReviews();
-        }
-      });
     });
   } catch (error) {
     console.error("Error loading reviews:", error);
   }
 }
-
 
 sortSelect.addEventListener('change', loadReviews);
 

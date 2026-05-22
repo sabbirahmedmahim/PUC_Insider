@@ -330,7 +330,18 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
-
+.app-footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-muted);
+  font-size: 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--glass-border);
+  width: 100%;
+  margin-top: 20px;
+}
 @media (max-width: 600px) {
   .search-modal { border-radius: 16px; padding: 20px; }
   .navbar { padding: 15px 20px; }
